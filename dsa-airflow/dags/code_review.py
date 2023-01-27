@@ -18,3 +18,25 @@ default_args = {
     'retry_delay': timedelta(seconds=10), 
 }
 
+with DAG(
+  'apple',
+  description='Prints name into file, reads name with hello, and selects three random apples',
+  default_args=default_args
+) as dag:
+
+  echo_to_file = BashOperator(
+    task_id='echo_to_file'
+    bash_command='echo Drew > /opt/airflow/dags/code_review.txt'
+  )
+
+  print_hello = PythonOperator(
+    task_id='print_hello',
+    python_callable=print_hello
+  )
+
+
+    
+
+
+
+
