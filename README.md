@@ -20,7 +20,7 @@
 - DAG contains the following tasks:
   -  Task 1. An `echo_to_file` task that uses a Bash operator. This task will echo name, and redirect the output into a file called `code_review.txt` that's in the same directory as the `code_review.py` file
   -  Task 2. A `greeting` task that uses a Python operator to call a Python function called `print_hello()`, it opens `code_review.txt`, reads your name from that file, and prints a greeting that includes your name.
-  -  Task 3. A task using a Bash operator, which echos `"picking three random apples"`.
+  -  Task 3. A task using a Bash operator, which echos `"Now picking three apples"`.
   -  Tasks 4, 5, and 6 are three Python operator tasks that will run simultaneously. Each task:
         - [x] Has a unique task ID
         - [x] Use a python_callable, `random_apple`. This function should randomly select an apple from the `APPLES` list, put it into a string, and print that string
