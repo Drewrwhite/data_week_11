@@ -7,8 +7,19 @@ from airflow.utils.dates import days_ago
 import random
 import pandas as pd 
 import numpy as np
+import os
 
 APPLES = ["pink lady", "jazz", "orange pippin", "granny smith", "red delicious", "gala", "honeycrisp", "mcintosh", "fuji"]
+
+def print_hello():
+  path = os.path.abspath(__file__)
+  dir_name = os.path.dirname(path)
+  with open(f"{dir_name}/code_review.txt", "r") as f:
+    print(f"Hello, {f.read()}!")
+
+def random_apple():
+  choice = random.choice(APPLES)
+  print(f"You must like {choice} apples!")
 
 
 default_args = {
@@ -25,8 +36,8 @@ with DAG(
 ) as dag:
 
   echo_to_file = BashOperator(
-    task_id='echo_to_file'
-    bash_command='echo Drew > /opt/airflow/dags/code_review.txt'
+    task_id='echo_to_file',
+    bash_command='echo "Drew" > /opt/airflow/dags/code_review.txt'
   )
 
   print_hello = PythonOperator(
@@ -34,8 +45,22 @@ with DAG(
     python_callable=print_hello
   )
 
+  picking_task = BashOperator(
+    task_id='picking_task',
+    bash_command='echo "Now picking three apples"'
+  )
 
-    
+  apple_task = []
+  for i in range(3):
+    task = PythonOperator(
+      task_id=f"apple_{i}",
+      python_callable=random_apple
+    )
+    apple_task.append(task)
+
+  end_task = EmptyOperator(
+    task_id='end'
+  )
 
 
 
