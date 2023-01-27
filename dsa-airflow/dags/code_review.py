@@ -40,8 +40,8 @@ with DAG(
     bash_command='echo "Drew" > /opt/airflow/dags/code_review.txt'
   )
 
-  print_hello = PythonOperator(
-    task_id='print_hello',
+  greeting_task = PythonOperator(
+    task_id='greeting_task',
     python_callable=print_hello
   )
 
@@ -51,7 +51,7 @@ with DAG(
   )
 
   apple_task = []
-  for i in range(3):
+  for i in range(1,4):
     task = PythonOperator(
       task_id=f"apple_{i}",
       python_callable=random_apple
@@ -62,6 +62,7 @@ with DAG(
     task_id='end'
   )
 
+  echo_to_file >> greeting_task >> picking_task >> apple_task >> end_task
 
 
 
